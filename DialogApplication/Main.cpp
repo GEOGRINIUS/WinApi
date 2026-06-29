@@ -1,0 +1,26 @@
+﻿#include<Windows.h>
+#include"resource.h"
+
+//Прототип функци:
+BOOL CALLBACK DlgProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
+
+INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, INT nCmdShow)
+{
+	//Вызов функци:
+	DialogBoxParam(hInstance, MAKEINTRESOURCE(IDD_DIALOG1), NULL, (DLGPROC)DlgProc, NULL);
+}
+
+//Реализация функци:
+BOOL CALLBACK DlgProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
+{
+	switch (uMsg)
+	{
+	case WM_INITDIALOG:
+		break;
+	case WM_COMMAND:
+		break;
+	case WM_CLOSE:
+		break;
+	}
+	return FALSE;
+}
