@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.13.35825.156 d17.13
+VisualStudioVersion = 17.13.35825.156
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WinAPI", "WinAPI\WinAPI.vcxproj", "{BACCF364-907B-47E8-AF33-B5BF8AC3F8E5}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DialogApplication", "DialogApplication\DialogApplication.vcxproj", "{41DFBB0F-22C0-4292-9B80-D8C04A1B090F}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DeskTopAplucetion", "DeskTopAplucetion\DeskTopAplucetion.vcxproj", "{BD0193C2-C7AE-4384-85FA-26DC8E6FD1F6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,6 +33,14 @@ Global
 		{41DFBB0F-22C0-4292-9B80-D8C04A1B090F}.Release|x64.Build.0 = Release|x64
 		{41DFBB0F-22C0-4292-9B80-D8C04A1B090F}.Release|x86.ActiveCfg = Release|Win32
 		{41DFBB0F-22C0-4292-9B80-D8C04A1B090F}.Release|x86.Build.0 = Release|Win32
+		{BD0193C2-C7AE-4384-85FA-26DC8E6FD1F6}.Debug|x64.ActiveCfg = Debug|x64
+		{BD0193C2-C7AE-4384-85FA-26DC8E6FD1F6}.Debug|x64.Build.0 = Debug|x64
+		{BD0193C2-C7AE-4384-85FA-26DC8E6FD1F6}.Debug|x86.ActiveCfg = Debug|Win32
+		{BD0193C2-C7AE-4384-85FA-26DC8E6FD1F6}.Debug|x86.Build.0 = Debug|Win32
+		{BD0193C2-C7AE-4384-85FA-26DC8E6FD1F6}.Release|x64.ActiveCfg = Release|x64
+		{BD0193C2-C7AE-4384-85FA-26DC8E6FD1F6}.Release|x64.Build.0 = Release|x64
+		{BD0193C2-C7AE-4384-85FA-26DC8E6FD1F6}.Release|x86.ActiveCfg = Release|Win32
+		{BD0193C2-C7AE-4384-85FA-26DC8E6FD1F6}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
