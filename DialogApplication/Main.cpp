@@ -18,6 +18,11 @@ BOOL CALLBACK DlgProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	case WM_INITDIALOG:
 		break;
 	case WM_COMMAND:
+		switch (LOWORD(wParam))
+		{
+		case IDOK: MessageBox(hwnd, "Было нажата кнопка ОК!", "Info", MB_OK | MB_ICONINFORMATION); break;
+		case IDCANCEL: EndDialog(hwnd, 0);
+		}
 		break;
 	case WM_CLOSE:
 		EndDialog(hwnd, 0);
