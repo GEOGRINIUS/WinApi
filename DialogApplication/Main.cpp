@@ -1,6 +1,8 @@
 ﻿#include<Windows.h>
 #include"resource.h"
 
+CONST CHAR g_sz_INVITE[] = "Введите имя пользователя";
+
 //Прототип функци:
 BOOL CALLBACK DlgProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
@@ -19,6 +21,7 @@ BOOL CALLBACK DlgProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	{
 		HICON hIcon = LoadIcon(GetModuleHandle(NULL), MAKEINTRESOURCE(IDI_ICON1));
 		SendMessage(hwnd, WM_SETICON, 0, (LPARAM)hIcon);
+		SendMessage(GetDlgItem(hwnd, IDC_EDIT_LOGIN), WM_SETTEXT, 0, (LPARAM)g_sz_INVITE);
 	}
 		break;
 	case WM_COMMAND:
@@ -33,7 +36,7 @@ BOOL CALLBACK DlgProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			SendMessage(hEditLogin, WM_GETTEXT, SIZE, (LPARAM)szBuffer);
 			SendMessage(hEditPassword, WM_SETTEXT, 0, (LPARAM)szBuffer);
 		}
-			break;
+			break;	
 		case IDOK: MessageBox(hwnd, "Было нажата кнопка ОК!", "Info", MB_OK | MB_ICONINFORMATION); break;
 		case IDCANCEL: EndDialog(hwnd, 0);
 		}
