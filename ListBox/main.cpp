@@ -1,12 +1,12 @@
-#include<Windows.h>
+п»ї#include<Windows.h>
 #include<stdio.h> //sprintf();
 #include"resource.h"
 
 CONST CHAR* g_sz_VALUES[] = { "This", "is", "my", "first", "List", "box" };
 
 BOOL CALLBACK DlgProc(HWND, UINT uMsg, WPARAM wParam, LPARAM lParam);
-//Dlgproc - это процедура окна, она обрабатывает любые действия пользователя.
-//Процедура окна - это самая обычная функция, которая неявно вызывается при запуске окна.
+//Dlgproc - СЌС‚Рѕ РїСЂРѕС†РµРґСѓСЂР° РѕРєРЅР°, РѕРЅР° РѕР±СЂР°Р±Р°С‚С‹РІР°РµС‚ Р»СЋР±С‹Рµ РґРµР№СЃС‚РІРёСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ.
+//РџСЂРѕС†РµРґСѓСЂР° РѕРєРЅР° - СЌС‚Рѕ СЃР°РјР°СЏ РѕР±С‹С‡РЅР°СЏ С„СѓРЅРєС†РёСЏ, РєРѕС‚РѕСЂР°СЏ РЅРµСЏРІРЅРѕ РІС‹Р·С‹РІР°РµС‚СЃСЏ РїСЂРё Р·Р°РїСѓСЃРєРµ РѕРєРЅР°.
 
 INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, INT nCmdShow)
 {
@@ -35,10 +35,29 @@ BOOL CALLBACK DlgProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			CHAR sz_buffer[256] = {};
 			SendMessage(hListBox, LB_GETTEXT, i, (WPARAM)sz_buffer);
 			CHAR sz_message[256] = {};
-			sprintf(sz_message, "Вы выбрали вариант №%i со значением '%s'.", i, sz_buffer);
-			MessageBox(hwnd, sz_buffer, "Выбранный элемент", MB_OK | MB_ICONINFORMATION);
+			sprintf(sz_message, "Р’С‹ РІС‹Р±СЂР°Р»Рё РІР°СЂРёР°РЅС‚ в„–%i СЃРѕ Р·РЅР°С‡РµРЅРёРµРј '%s'.", i, sz_buffer);
+			MessageBox(hwnd, sz_message, "Р’С‹Р±СЂР°РЅРЅС‹Р№ СЌР»РµРјРµРЅС‚", MB_OK | MB_ICONINFORMATION);
 		}
 			break;
+		case IDC_LIST1:
+		{
+			//Р РµР°Р»РёР·Р°С†РёСЏ РёР·РјРµРЅРµРЅРёРµ С‚РµРєСЃС‚Р° РІ IDC_LIST_BOX (Listbox Control)
+			HWND hListBox = GetDlgItem(hwnd, IDC_LIST1);
+			INT i = SendMessage(hListBox, LB_GETCURSEL, 0, 0);
+			CHAR sz_buffer[256] = {};
+			SendMessage(hListBox, WM_GETTEXT, sizeof(sz_buffer), (LPARAM)sz_buffer);
+			if (HIWORD(wParam) == LBN_SETFOCUS && strcmp(sz_buffer, g_sz_VALUES[i]) == 0)
+				SendMessage(hListBox, LB_RESETCONTENT, 0, 0);
+			int idx = SendMessage(hListBox, LB_GETCURSEL, 0, 0);
+			if (idx != LB_ERR)
+				SendMessage(hListBox, LB_GETTEXT, idx, (LPARAM)sz_buffer);
+
+		}
+		case IDC_BUTTON2:
+		{
+			//Р¤СѓРЅРєС†РёСЏ РєРЅРѕРїРєРё СѓРґР°Р»РёС‚СЊ.
+			HWND hListBox = GetDlgItem(hwnd, IDC_LIST1);
+		}
 		case IDCANCEL: EndDialog(hwnd, 0);
 		}
 	}
