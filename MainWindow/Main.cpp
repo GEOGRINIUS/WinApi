@@ -16,7 +16,7 @@ INT WINAPI  WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, I
 	//wClass.hIcon = LoadIcon(NULL, IDI_APPLICATION);
 	//wClass.hIconSm = LoadIcon(NULL, IDI_APPLICATION);
 	wClass.hIcon = (HICON)LoadImage
-	(hInstance, "litecoin.ico", 
+	(hInstance, "team_fortress.ico", 
 	IMAGE_ICON, LR_DEFAULTSIZE, 
 	LR_DEFAULTSIZE, LR_LOADFROMFILE);
 	wClass.hIconSm = (HICON)LoadImage
@@ -26,6 +26,13 @@ INT WINAPI  WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, I
 		LR_LOADFROMFILE
 	);
 	wClass.hCursor = LoadCursor(NULL, IDC_ARROW);
+	wClass.hCursor = (HCURSOR)LoadImage
+	(
+		hInstance, "Cursor.ico", IMAGE_CURSOR, 
+		LR_DEFAULTSIZE, LR_DEFAULTSIZE,
+		LR_LOADFROMFILE 
+	);
+	//wClass.hCursor = LoadCursor(NULL, IDC_ARROW);
 	wClass.hbrBackground = (HBRUSH)COLOR_WINDOW;
 	
 	wClass.lpszClassName = g_szMYWindowClass;
