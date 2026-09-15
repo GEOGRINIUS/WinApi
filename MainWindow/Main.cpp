@@ -53,13 +53,15 @@ INT WINAPI  WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, I
 		g_szMYWindowClass,	//Class name
 		g_szMYWindowClass,	//Window title
 		WS_OVERLAPPEDWINDOW,//Window style
-		CW_USEDEFAULT,CW_USEDEFAULT,	//Position
-		CW_USEDEFAULT,CW_USEDEFAULT,	//Window size
-		NULL,
-		NULL,
+		200,150,	//Position
+		1110,555,	//Window size
+		NULL,	//Parent Window
+		NULL,	//hMenu. Для главного окна сюда передаются RESOURCE_ID главного меню.
+				//Для дочерного окна в hMenu передаются RESOURCE_ID создаваемого элемента главного окна,
+				//По этому RESOURCE_ID мы сможем находить HWND нужного элемента при помощи функции GetDlgItem(hwnd, RESOURCE_ID);
+				//Абсолютно любой RESOURCE_ID представляет собой целое число.
 		hInstance,
 		NULL
-
 	);
 	if (hwnd == NULL)
 	{
@@ -85,8 +87,73 @@ INT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	switch (uMsg)
 	{
 	case WM_CREATE:
-		break;
+	{
+
+		HWND hStatic = CreateWindowEx
+		(
+			NULL,
+			"Static",
+			"Этот StaticText создан при помощи функций CreateWindow()",
+			WS_CHILD | WS_VISIBLE,
+			10, 10, 
+			500,25,
+			hwnd, 
+			(HMENU)1000,
+			GetModuleHandle(NULL), //hInstance
+			NULL
+		);
+
+		HWND hEdit = CreateWindowEx
+		(
+			NULL,
+			"Edit",
+			"Этот текстовое поле создано при помощи функций CreateWindowEx()",
+			WS_CHILD | WS_VISIBLE | WS_BORDER,
+			//WS_ - Window Style 
+			//ES_ - Edit Style
+			10, 38,
+			500, 22,
+			hwnd,
+			(HMENU)1001,
+			GetModuleHandle(NULL),
+			NULL
+		);
+
+		HWND hButton = CreateWindowEx
+		(
+			NULL,
+			"Button",
+			"Применить",
+			WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,
+			//BS_ - Button Style
+			400,67,
+			100,32,
+			hwnd,
+			(HMENU)1002,	//Compatibility - Совместимость;
+							//Compatible	-	Совместимый;
+							//Incompatible  - Несовместимый;
+			GetModuleHandle(NULL),
+			NULL
+		);
+	}
+	break;
 	case WM_COMMAND:
+	{
+		CHAR sz_buffer[256] = {};
+		switch (LOWORD(wParam))
+		{
+		case 1002:
+		{
+			CHAR sz_buffer[256] = {};
+			HWND hStatic = GetDlgItem(hwnd, 1000);
+			HWND hEdit = GetDlgItem(hwnd, 1001);
+			SendMessage(hEdit, WM_GETTEXT, 256, (LPARAM)sz_buffer);
+			SendMessage(hStatic, WM_SETTEXT, 0, (LPARAM)sz_buffer);
+			SendMessage(hwnd, WM_SETTEXT, 0, (LPARAM)sz_buffer);
+		}
+			break;
+		}
+	}
 		break;
 	case WM_DESTROY:PostQuitMessage(0); break;
 	case WM_CLOSE: DestroyWindow(hwnd); break;
