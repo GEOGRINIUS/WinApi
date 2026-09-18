@@ -47,19 +47,26 @@ INT WINAPI  WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, I
 	}
 
 	//2) Создание окна:
+	int screen_width  = GetSystemMetrics(SM_CXSCREEN);
+	int screen_height = GetSystemMetrics(SM_CYSCREEN);
+	int window_width  =	 screen_width * 3 / 4;
+	int window_height = screen_height * 3 / 4;
+	int window_start_x = screen_width * 1 / 8;
+	int window_start_y = screen_height * 1 / 8;
+
 	HWND hwnd = CreateWindowEx
 	(
 		NULL,				//exStyle
 		g_szMYWindowClass,	//Class name
 		g_szMYWindowClass,	//Window title
 		WS_OVERLAPPEDWINDOW,//Window style
-		200,150,	//Position
-		1110,555,	//Window size
-		NULL,	//Parent Window
-		NULL,	//hMenu. Для главного окна сюда передаются RESOURCE_ID главного меню.
-				//Для дочерного окна в hMenu передаются RESOURCE_ID создаваемого элемента главного окна,
-				//По этому RESOURCE_ID мы сможем находить HWND нужного элемента при помощи функции GetDlgItem(hwnd, RESOURCE_ID);
-				//Абсолютно любой RESOURCE_ID представляет собой целое число.
+		window_start_x, window_start_y, //Position
+		window_width,window_height,//Window size
+		NULL,	 //Parent Window
+		NULL,	 //hMenu. Для главного окна сюда передаются RESOURCE_ID главного меню.
+				 //Для дочерного окна в hMenu передаются RESOURCE_ID создаваемого элемента главного окна,
+				 //По этому RESOURCE_ID мы сможем находить HWND нужного элемента при помощи функции GetDlgItem(hwnd, RESOURCE_ID);
+				 //Абсолютно любой RESOURCE_ID представляет собой целое число.
 		hInstance,
 		NULL
 	);
