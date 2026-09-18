@@ -1,4 +1,6 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include<Windows.h>
+#include<cstdio>
 
 CONST CHAR g_szMYWindowClass[] = "My Window Class";
 INT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
@@ -144,6 +146,24 @@ INT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		);
 	}
 	break;
+	case WM_SIZE:
+	case WM_MOVE:
+	{
+		RECT window_rect;
+		GetWindowRect(hwnd, &window_rect);
+		INT width = window_rect.right - window_rect.left;
+		INT height = window_rect.bottom - window_rect.top;
+		CHAR sz_buffer[256] = {};
+		sprintf
+		(
+			sz_buffer, 
+			"%s, Size: %ix%i; Position: %ix%i;", 
+			g_szMYWindowClass, width, height,
+			window_rect.left, window_rect.top
+		);
+		SendMessage(hwnd, WM_SETTEXT, 0, (LPARAM)sz_buffer);
+	}
+		break;
 	case WM_COMMAND:
 	{
 		CHAR sz_buffer[256] = {};
