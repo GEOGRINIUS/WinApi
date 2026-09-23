@@ -1,3 +1,4 @@
+﻿#define _CRT_SECURE_NO_WARNINGS
 #include<Windows.h>
 #include"resource.h"
 #include"dimenrions.h"
@@ -8,7 +9,7 @@ INT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
 INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, INT nCmdShow)
 {
-	//1) ����������� ������ ����:
+	//1) Регистрация класса окна:
 	WNDCLASSEX wClass;
 	ZeroMemory(&wClass, sizeof(wClass));
 
@@ -42,7 +43,7 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, IN
 		return 0;
 	}
 
-	//2) �������� ����:
+	//2) Создание окна:
 	HWND hwnd = CreateWindowEx
 	(
 		NULL,				//ExStyle
@@ -64,7 +65,7 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, IN
 	ShowWindow(hwnd, nCmdShow);
 	UpdateWindow(hwnd);
 
-	//3) ������ ����� ���������:
+	//3) Запуск цикла сообщений:
 	MSG msg;
 	while (GetMessage(&msg, 0, 0, 0) > 0)
 	{
@@ -83,14 +84,12 @@ INT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		(
 			NULL,
 			"Edit",
-			"0.",
-			WS_CHILD | WS_VISIBLE | WS_BORDER | ES_RIGHT,
+			"0",
+			WS_CHILD | WS_VISIBLE | WS_BORDER | ES_RIGHT | ES_NUMBER,
 			g_i_START_X, g_i_START_Y,
 			g_i_DISPLAY_WIDTH, g_i_DISPLAY_HEIGHT,
-			hwnd,
-			(HMENU)IDC_EDIT_DISPLAY,
-			GetModuleHandle(NULL),
-			NULL
+			hwnd, (HMENU)IDC_EDIT_DISPLAY,
+			GetModuleHandle(NULL), NULL
 		);
 		for (int i = 7; i > 0; i -= 3)
 		{
@@ -180,6 +179,28 @@ INT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		);
 		break;
 	case WM_COMMAND:
+	{
+		CHAR sz_display[256] = {};
+		CHAR sz_digit[2]	 = {};
+		HWND hEditDisplay = GetDlgItem(hwnd, IDC_EDIT_DISPLAY);
+		if (LOWORD(wParam) >= IDC_BUTTON_0 && LOWORD(wParam) <= IDC_BUTTON_9)
+		{
+			SendMessage(hEditDisplay, WM_GETTEXT, 256, (LPARAM)sz_display);
+			sz_digit[0] = LOWORD(wParam) - IDC_BUTTON_0 + 48;
+
+			if (strcmp(sz_display, "0") == 0)
+			//функция strcmp(str1, str2) выполняет сравнение двух строк (String Compare)
+			//Если функция вернула '0' - значит строки идентичны, в противном случае строки разные.
+				strcpy(sz_display, sz_digit);
+			//Функция strcpy(str1, str2) выполняет копирование содержимого строки 'str2' в строку 'str1'.
+			//Содержимое строки 'str1' при этом удаляется.
+			else 
+				strcat(sz_display, sz_digit);
+			//Функция strcat(str1, str2) Выполняет конкатенация строк, т.е. слияние строк,
+			//А именно, к содержимому строки 'str1' добавляет в конец содержимое строки 'str2'.
+			SendMessage(hEditDisplay, WM_SETTEXT, 0, (LPARAM)sz_display);
+		}
+	}
 		break;
 	case WM_DESTROY:
 		PostQuitMessage(0);
