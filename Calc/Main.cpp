@@ -45,10 +45,10 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, IN
 	//2) Создание окна:
 	HWND hwnd = CreateWindowEx
 	(
-		NULL,
-		g_szClassName,
-		g_szClassName,
-		WS_OVERLAPPEDWINDOW,
+		NULL,				//ExStyle
+		g_szClassName,		//ClassName
+		g_szClassName,		//Window Title
+		WS_OVERLAPPEDWINDOW ^ WS_THICKFRAME ^ WS_MAXIMIZEBOX,//style
 		CW_USEDEFAULT, CW_USEDEFAULT,
 		g_i_WINDOW_WIDTH, g_i_WINDOW_HEIGHT,
 		NULL,
