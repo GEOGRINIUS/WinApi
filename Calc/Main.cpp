@@ -2,6 +2,7 @@
 #include<Windows.h>
 #include<float.h>
 #include<cstdio>
+#include<iostream>
 #include"resource.h"
 #include"dimenrions.h"
 
@@ -82,6 +83,8 @@ INT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	switch (uMsg)
 	{
 	case WM_CREATE:
+		AllocConsole();
+		freopen("CONOUT$", "w", stdout);
 		CreateWindowEx
 		(
 			NULL,
@@ -197,8 +200,8 @@ INT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			{
 				SendMessage(hEditDisplay, WM_SETTEXT, 0, (LPARAM)"");
 				input_operation = FALSE;
-				input = TRUE;
 			}
+				input = TRUE;
 			SendMessage(hEditDisplay, WM_GETTEXT, 256, (LPARAM)sz_display);
 			if (LOWORD(wParam) == IDC_BUTTON_POINT)
 			{
@@ -249,8 +252,15 @@ INT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			SendMessage(hEditDisplay, WM_GETTEXT, 256, (LPARAM)sz_display);
 			if (a == DBL_MIN)a = atof(sz_display);
 			else if(input) b = atof(sz_display);
+			std::cout << "INPUT OPERATION" << std::endl;
+			std::cout << "a = " << a << std::endl;
+			std::cout << "b = " << b << std::endl;
+			std::cout << "input: " << input << std::endl;
+			std::cout << "input_operation: " << input_operation << std::endl;
+			std::cout << "operation:" << LOWORD(wParam) << std::endl;
+			std::cout << "\n===============================\n" << std::endl;
+			if(input) SendMessage(hwnd, WM_COMMAND, LOWORD(IDC_BUTTON_EQUAL), 0);
 			input = FALSE;
-			SendMessage(hwnd, WM_COMMAND, LOWORD(IDC_BUTTON_EQUAL), 0);
 			operation = LOWORD(wParam);
 			input_operation = TRUE;
 		}
@@ -258,7 +268,7 @@ INT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		{
 			SendMessage(hEditDisplay, WM_GETTEXT, 256, (LPARAM)sz_display);
 			if (a == DBL_MIN)a = atof(sz_display);
-			else b = atof(sz_display);
+			else if(input) b = atof(sz_display);
 			input = FALSE;
 			switch (operation)
 			{
@@ -270,6 +280,13 @@ INT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			input_operation = FALSE;
 			sprintf(sz_display, "%g", a);
 			SendMessage(hEditDisplay, WM_SETTEXT, 0, (LPARAM)sz_display);
+			std::cout << "IDC_BUTTON_EQUAL:" << std::endl;
+			std::cout << "a = " << a << std::endl;
+			std::cout << "b = " << b << std::endl;
+			std::cout << "input: " << input << std::endl;
+			std::cout << "input_operation: " << input_operation << std::endl;
+			std::cout << "operation:" << LOWORD(wParam) << std::endl;
+			std::cout << "\n===============================\n" << std::endl;
 		}
 	}
 	break;
@@ -336,6 +353,10 @@ INT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			SendMessage(hwnd, WM_COMMAND, LOWORD(IDC_BUTTON_POINT), 0);
 			break;
 			////////////////////////////////////////////////////////////////////////////////////////////////
+		case VK_MULTIPLY:
+			SendMessage(GetDlgItem(hwnd, IDC_BUTTON_ASTER), BM_SETSTATE, FALSE, 0);
+			SendMessage(hwnd, WM_COMMAND, LOWORD(IDC_BUTTON_ASTER), 0);
+			break;
 		case VK_OEM_PLUS:
 		case VK_ADD:
 			SendMessage(GetDlgItem(hwnd, IDC_BUTTON_PLUS), BM_SETSTATE, FALSE, 0); break;
@@ -343,12 +364,8 @@ INT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			break;
 		case VK_OEM_MINUS:
 		case VK_SUBTRACT:
-			SendMessage(GetDlgItem(hwnd, IDC_BUTTON_MINUS), BM_SETSTATE, FALSE, 0);
-			SendMessage(hwnd, WM_COMMAND, LOWORD(IDC_BUTTON_MINUS), 0);
-			break;
-		case VK_MULTIPLY:
-			SendMessage(GetDlgItem(hwnd, IDC_BUTTON_ASTER), BM_SETSTATE, FALSE, 0);
-			SendMessage(hwnd, WM_COMMAND, LOWORD(IDC_BUTTON_ASTER), 0);
+		SendMessage(GetDlgItem(hwnd, IDC_BUTTON_MINUS), BM_SETSTATE, FALSE, 0);
+		SendMessage(hwnd, WM_COMMAND, LOWORD(IDC_BUTTON_MINUS), 0);
 			break;
 		case VK_OEM_2:
 		case VK_DIVIDE:
