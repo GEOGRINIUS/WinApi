@@ -86,9 +86,10 @@ INT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	switch (uMsg)
 	{
 	case WM_CREATE:
+	{
 		AllocConsole();
 		freopen("CONOUT$", "w", stdout);
-		CreateWindowEx
+		HWND hEdit = CreateWindowEx
 		(
 			NULL,
 			"Edit",
@@ -113,9 +114,9 @@ INT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 					WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON | BS_BITMAP,
 					//g_i_BUTTON_START_X + (g_i_BUTTON_SIZE + g_i_INTERVAL)*j,
 					//g_i_BUTTON_START_Y + (g_i_BUTTON_SIZE + g_i_INTERVAL) * (2 - i / 3),
-					BUTTON_SHIFT_X(j), BUTTON_SHIFT_Y(2-i/3),
+					BUTTON_SHIFT_X(j), BUTTON_SHIFT_Y(2 - i / 3),
 					g_i_BUTTON_SIZE, g_i_BUTTON_SIZE,
-					hwnd, (HMENU)(IDC_BUTTON_0+i+j),
+					hwnd, (HMENU)(IDC_BUTTON_0 + i + j),
 					GetModuleHandle(NULL), NULL
 				);
 			}
@@ -129,15 +130,15 @@ INT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 				"Button",
 				"0",
 				WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON | BS_BITMAP,
-				g_i_BUTTON_START_X,g_i_BUTTON_START_Y+(g_i_BUTTON_SIZE+g_i_INTERVAL)*3,
+				g_i_BUTTON_START_X, g_i_BUTTON_START_Y + (g_i_BUTTON_SIZE + g_i_INTERVAL) * 3,
 				g_i_BUTTON_DOUBLE_SIZE, g_i_BUTTON_SIZE,
 				hwnd,
 				(HMENU)IDC_BUTTON_0,
 				GetModuleHandle(NULL),
 				NULL
-			), 
-			BM_SETIMAGE, 
-			IMAGE_BITMAP, 
+			),
+			BM_SETIMAGE,
+			IMAGE_BITMAP,
 			(LPARAM)(HBITMAP)LoadImage
 			(
 				GetModuleHandle(NULL),
@@ -160,7 +161,7 @@ INT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		{
 			CreateWindowEx
 			(
-				NULL, "Button", g_OPERATIONS[3-i],
+				NULL, "Button", g_OPERATIONS[3 - i],
 				WS_CHILD | WS_VISIBLE | BS_DEFPUSHBUTTON | BS_BITMAP,
 				BUTTON_SHIFT_X(3), BUTTON_SHIFT_Y(i),
 				g_i_BUTTON_SIZE, g_i_BUTTON_SIZE,
@@ -174,7 +175,7 @@ INT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		(
 			NULL, "Button", "<-",
 			WS_CHILD | WS_VISIBLE | BS_DEFPUSHBUTTON | BS_BITMAP,
-			BUTTON_SHIFT_X(4),BUTTON_SHIFT_Y(0),
+			BUTTON_SHIFT_X(4), BUTTON_SHIFT_Y(0),
 			g_i_BUTTON_SIZE, g_i_BUTTON_SIZE,
 			hwnd, (HMENU)IDC_BUTTON_BSP,
 			GetModuleHandleA(NULL), NULL
@@ -185,7 +186,7 @@ INT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON | BS_BITMAP,
 			BUTTON_SHIFT_X(4), BUTTON_SHIFT_Y(1),
 			g_i_BUTTON_SIZE, g_i_BUTTON_SIZE,
-			hwnd, 
+			hwnd,
 			(HMENU)IDC_BUTTON_CLR,
 			GetModuleHandle(NULL),
 			NULL
@@ -200,6 +201,21 @@ INT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			GetModuleHandle(NULL), NULL
 		);
 		SetSkin(hwnd, "square_blue");
+		HFONT hFont = CreateFont
+		(
+			48, 16,
+			0, 0,
+			500,
+			FALSE, FALSE, FALSE,
+			DEFAULT_CHARSET,
+			OUT_TT_PRECIS,
+			CLIP_CHARACTER_PRECIS,
+			ANTIALIASED_QUALITY,
+			DEFAULT_PITCH,
+			"Tahoma"
+		);
+		SendMessage(hEdit, WM_SETFONT, (WPARAM)hFont, TRUE);
+	}
 		break;
 	case WM_COMMAND:
 	{
@@ -306,6 +322,7 @@ INT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			std::cout << "operation:" << LOWORD(wParam) << std::endl;
 			std::cout << "\n===============================\n" << std::endl;
 		}
+		SetFocus(hwnd);
 	}
 	break;
 	case WM_KEYDOWN:
