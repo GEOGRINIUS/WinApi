@@ -26,6 +26,9 @@
     <ClInclude Include="dimenrions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ButtonsBMP.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resource.rc">
