@@ -131,6 +131,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ButtonsBMP.h" />
+    <ClInclude Include="Skins.h" />
     <ClInclude Include="dimenrions.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
